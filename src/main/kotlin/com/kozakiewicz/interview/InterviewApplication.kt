@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @SpringBootApplication
@@ -29,6 +30,14 @@ class MessageResource(private val transactionRepository: TransactionRepository) 
 	fun getAllTransactions(): ResponseEntity<List<Transaction>>{
 		val transactions = transactionRepository.findAll()
 		return ResponseEntity.ok(transactions)
+	}
+
+	@GetMapping("/api/commision")
+	fun calculateCommisionFor(@RequestParam(name = "customer_id") value: String){
+		if (value == "ALL"){
+			println("ALL is a query param")
+		}
+		println("query param: $value")
 	}
 }
 
