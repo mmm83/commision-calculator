@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
 }
 
 @RestController
-class MessageResource(private val transactionRepository: TransactionRepository) {
+class CommisionCalculatorRestController(private val transactionRepository: TransactionRepository) {
 
 	@GetMapping
 	fun index(): List<Message> = listOf(

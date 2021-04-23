@@ -1,5 +1,5 @@
 # commision-calculator
-Cudos to tutorials authors:
+Kudos to tutorials authors:
 1. https://kotlinlang.org/docs/jvm-spring-boot-restful.html
 2. https://medium.com/techwasti/spring-boot-mongodb-rest-api-using-kotlin-47e49729bb21
 
