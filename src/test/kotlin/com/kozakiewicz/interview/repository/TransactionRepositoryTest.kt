@@ -37,7 +37,7 @@ internal class TransactionRepositoryTest {
 
     @Test
     fun shouldFindAllTransactionsForGivenCustomerIDs() {
-        val findAllByCustomerIdIn = transactionRepository.findAllByCustomerIdIn(1, 2, 3)
+        val findAllByCustomerIdIn = transactionRepository.findAllByCustomerIdIn(arrayListOf(1, 2, 3))
         assertEquals(findAllByCustomerIdIn.size, 3)
     }
 

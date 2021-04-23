@@ -19,13 +19,6 @@ fun main(args: Array<String>) {
 @RestController
 class CommisionCalculatorRestController(private val transactionRepository: TransactionRepository) {
 
-	@GetMapping
-	fun index(): List<Message> = listOf(
-			Message("3", "Adam", "Adamowski", 11, 1500.00f, 5.33f, "11.12.2020 14:54:31"),
-			Message("1", "Marek", "Marecki", 3, 95200.30f, 0.00f, "14.12.2020 11:00:01"),
-			Message("2", "Anna", "Annowska", 33, 12531.21f, 0.99f, "31.12.2020 19:21:04")
-			)
-
 	@GetMapping("/all")
 	fun getAllTransactions(): ResponseEntity<List<Transaction>>{
 		val transactions = transactionRepository.findAll()
@@ -33,19 +26,13 @@ class CommisionCalculatorRestController(private val transactionRepository: Trans
 	}
 
 	@GetMapping("/api/commision")
-	fun calculateCommisionFor(@RequestParam(name = "customer_id") value: String){
-		if (value == "ALL"){
-			println("ALL is a query param")
+	fun calculateCommisionFor(@RequestParam(name = "customer_id") value: String): ResponseEntity<List<Transaction>>{
+		if (value == "ALL" || value.isEmpty()){
+			val transactions = transactionRepository.findAll()
+			return ResponseEntity.ok(transactions)
 		}
-		println("query param: $value")
+		val customerIDs = value.split(",").map { it.toInt() }
+		val findAllByCustomerIdIn = transactionRepository.findAllByCustomerIdIn(customerIDs)
+		return ResponseEntity.ok(findAllByCustomerIdIn)
 	}
 }
-
-data class Message(
-		val id: String?,
-		val firstName: String,
-		val lastName: String,
-		val numberOfTransactions: Number,
-		val totalValue: Float,
-		val totalFee: Float,
-		val lastTransactionDate: String)
