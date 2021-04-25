@@ -14,7 +14,7 @@ class CommissionSummary (
     val lastName: String,
     val customerId: Number,
     val numberOfTransactions: Number,
-    val totalValueOfTransactions: Number,
-    val transactionsFeeValue: Number,
+    val totalValueOfTransactions: String,
+    val transactionsFeeValue: String,
     val lastTransactionDate: String,
 )

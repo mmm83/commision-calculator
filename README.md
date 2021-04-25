@@ -3,6 +3,12 @@ Kudos to tutorials authors:
 1. https://kotlinlang.org/docs/jvm-spring-boot-restful.html
 2. https://medium.com/techwasti/spring-boot-mongodb-rest-api-using-kotlin-47e49729bb21
 
+## Running tests
+Unit tests written using embedded mongodb. To run tests execute gradle test task.
+```shell
+gradle test
+```
+
 ## Database
 Created MongoDB database on using free account on https://cloud.mongodb.com
 
@@ -34,3 +40,12 @@ To prevent uploading database credentials to repo following command can be used:
 git update-index --assume-unchanged src/main/resources/application.properties
 ```
 https://stackoverflow.com/a/7658676/10950272
+
+## TODOs
+1. Simple HTTP authentication for endpoint, spring security should do the job
+2. Consider load of app, first ideas would be:
+   - build query to get proper result directly from database
+   - cache results
+3. Log request to database - add log repository and log Transaction entity to it in each request. Or simplified Transaction entity with just customerId, total fee and request date.
+
+Other things to consider would be to add failing scenarios test cases and handle them properly.

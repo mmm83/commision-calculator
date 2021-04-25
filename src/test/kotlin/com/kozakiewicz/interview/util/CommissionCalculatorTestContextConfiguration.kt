@@ -20,7 +20,7 @@ class CommissionCalculatorTestContextConfiguration {
     @Bean
     fun commissionCalculator(): CommissionCalculator{
         createFeeWages(
-            arrayOf(100, "5"),
+            arrayOf(100, "5,0"),
             arrayOf(200, "4"),
             arrayOf(1000, "2")
         )

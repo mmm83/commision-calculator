@@ -1,6 +1,6 @@
 package com.kozakiewicz.interview
 
-import com.kozakiewicz.interview.entity.Transaction
+import com.kozakiewicz.interview.entity.CommissionSummary
 import com.kozakiewicz.interview.repository.TransactionRepository
 import com.kozakiewicz.interview.util.CommissionCalculator
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -23,21 +23,15 @@ class CommissionCalculatorRestController(
     private val commissionCalculator: CommissionCalculator
 ) {
 
-    @GetMapping("/all")
-    fun getAllTransactions(): ResponseEntity<List<Transaction>> {
-        val transactions = transactionRepository.findAll()
-        return ResponseEntity.ok(transactions)
-    }
-
     @GetMapping("/api/commission")
-    fun calculateCommissionFor(@RequestParam(name = "customer_id") value: String): ResponseEntity<List<Transaction>> {
+    fun calculateCommissionFor(@RequestParam(name = "customer_id") value: String): ResponseEntity<List<CommissionSummary>> {
         if (value == "ALL" || value.isEmpty()) {
             val transactions = transactionRepository.findAll()
-            return ResponseEntity.ok(transactions)
+            return ResponseEntity.ok(commissionCalculator.calculateAllCommissions(transactions))
         }
-        val customerIDs = value.split(",").map { it.toInt() }
+        val customerIDs: List<Int> = value.split(",").map { it.toInt() }
         val findAllByCustomerIdIn = transactionRepository.findAllByCustomerIdIn(customerIDs)
-        commissionCalculator.calculateCommission(findAllByCustomerIdIn)
-        return ResponseEntity.ok(findAllByCustomerIdIn)
+        val commissions = commissionCalculator.calculateCommissions(customerIDs, findAllByCustomerIdIn)
+        return ResponseEntity.ok(commissions)
     }
 }
